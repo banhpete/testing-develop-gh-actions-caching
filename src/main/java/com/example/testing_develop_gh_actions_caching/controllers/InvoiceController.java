@@ -51,6 +51,7 @@ public class InvoiceController {
     }
 
     existingInvoice.setTotalAmount(invoice.getTotalAmount());
+    existingInvoice.setInvoiceId(invoice.getInvoiceId());
 
     return ResponseEntity.ok(existingInvoice);
   }
