@@ -22,7 +22,8 @@ public class InvoiceController {
 
   @GetMapping("/invoices/{id}")
   public ResponseEntity<Invoice> getInvoice(@PathVariable String id) {
-    Invoice invoice = invoices.stream().filter(i -> i.getInvoiceId().equals(id)).findFirst().orElse(null);
+    Invoice invoice =
+        invoices.stream().filter(i -> i.getInvoiceId().equals(id)).findFirst().orElse(null);
 
     if (invoice == null) {
       return ResponseEntity.notFound().build();
