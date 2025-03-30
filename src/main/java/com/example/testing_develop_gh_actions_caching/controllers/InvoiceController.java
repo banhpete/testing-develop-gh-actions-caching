@@ -22,7 +22,7 @@ public class InvoiceController {
 
   @GetMapping("/invoices/{id}")
   public ResponseEntity<Invoice> getInvoice(@PathVariable String id) {
-    Invoice invoice = invoices.stream().filter(i -> i.getId().equals(id)).findFirst().orElse(null);
+    Invoice invoice = invoices.stream().filter(i -> i.getInvoiceId().equals(id)).findFirst().orElse(null);
 
     if (invoice == null) {
       return ResponseEntity.notFound().build();
@@ -34,7 +34,7 @@ public class InvoiceController {
   @PostMapping("/invoices")
   public ResponseEntity<Invoice> createInvoice(Invoice invoice) {
     invoices.add(invoice);
-    invoice.setId(UUID.randomUUID().toString());
+    invoice.setInvoiceId(UUID.randomUUID().toString());
     return ResponseEntity.ok(invoice);
   }
 }
