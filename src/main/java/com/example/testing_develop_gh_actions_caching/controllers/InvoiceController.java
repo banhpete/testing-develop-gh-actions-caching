@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +39,20 @@ public class InvoiceController {
     invoices.add(invoice);
     invoice.setInvoiceId(UUID.randomUUID().toString());
     return ResponseEntity.ok(invoice);
+  }
+
+  @PatchMapping("/invoices/{id}")
+  public ResponseEntity<Invoice> updateInvoice(@PathVariable String id, Invoice invoice) {
+    Invoice existingInvoice =
+        invoices.stream().filter(i -> i.getInvoiceId().equals(id)).findFirst().orElse(null);
+
+    if (existingInvoice == null) {
+      return ResponseEntity.notFound().build();
+    }
+
+    existingInvoice.setTotalAmount(invoice.getTotalAmount());
+
+    return ResponseEntity.ok(existingInvoice);
   }
 
   @DeleteMapping("/invoices/{id}")
